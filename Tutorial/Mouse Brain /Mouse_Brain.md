@@ -118,3 +118,19 @@ sce.combined
    
 # Batch Correction
 Correcting possible batch effects when performing multi-sample analysis is necessary. Here, we perform batch correction and visualize the UMAP embedding of spots before and after batch correction:
+
+
+``` r
+sce.combined = runUMAP(sce.combined, dimred = "PCA")
+colnames(reducedDim(sce.combined, "UMAP")) = c("UMAP1", "UMAP2")
+
+ggplot(data.frame(reducedDim(sce.combined, "UMAP"))) +
+  geom_point(alpha=0.3,aes(x = UMAP1, y = UMAP2, color = factor(sce.combined$sample_id)),size=0.7) +
+  labs(color = "Sample") +
+  theme_classic() +
+  scale_color_manual(breaks = c("Sec1_Anterior", "Sec1_Posterior", "Sec2_Anterior","Sec2_Posterior"),
+                     values=c("steelblue1", "peru", "green","mediumpurple"))+
+  theme(axis.line = element_line(colour = 'black', size = 1.5))+
+  coord_fixed()
+
+```
