@@ -33,6 +33,7 @@ suppressPackageStartupMessages({
   library(patchwork)
   library(scater)
   library(harmony)
+  library(BayesSpace)
 })
 set.seed(100)
 
@@ -86,7 +87,32 @@ for(i in 1:nrow(colData(sec2_posterior))){
   colData(sec2_posterior)@rownames[i]<-paste0("Sec2_Post_",colData(sec2_posterior)@rownames[i])
 }
 
+#Combine into 1 SCE and preprocess
+sce.combined = cbind(sec2_anterior, sec1_anterior, sec2_posterior, sec1_posterior, deparse.level = 1)
+sce.combined = spatialPreprocess(sce.combined, n.PCs = 50, n.HVGs=2000,assay.type="logcounts") #lognormalize, PCA
 
+sce.combined = runUMAP(sce.combined, dimred = "PCA")
+colnames(reducedDim(sce.combined, "UMAP")) = c("UMAP1", "UMAP2")
 
+sce.combined
 
 ```
+
+
+    ## class: SpatialExperiment 
+    ## dim: 31053 12167  
+    ## metadata(1): BayesSpace.data
+    ## assays(2): counts logcounts
+    ## rownames(31053): ENSMUSG00000051951 ENSMUSG00000089699 ... ENSMUSG00000096730
+    ##   ENSMUSG00000095742
+    ## rowData names(2): symbol is.HVG
+    ## colnames(12167): Sec2_Ant_AAACAAGTATCTCCCA-1 Sec2_Ant_AAACACCAATAACTGC-1 ...
+    ## Sec1_Post_TTGTTTCATTAGTCTA-1 Sec1_Post_TTGTTTCCATACAACT-1
+    ## colData names(5): in_tissue array_row array_col sample_id sizeFactor
+    ## reducedDimNames(2): PCA UMAP
+    ## mainExpName: NULL
+    ## altExpNames(0):
+    ## spatialCoords names(2) : pxl_col_in_fullres pxl_row_in_fullres
+    ## imgData names(4): sample_id image_id data scaleFactor
+
+   
