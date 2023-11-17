@@ -23,3 +23,70 @@ folder, which we will use to load them into a
 [`SpatialExperiment`](https://bioconductor.org/packages/release/bioc/html/SpatialExperiment.html)
 object.
 
+# Loading Data
+
+Here, in this section we load and combine ST sections to construct the spots transcriptional graph.
+
+``` r
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(patchwork)
+  library(scater)
+  library(harmony)
+})
+set.seed(100)
+
+matrix_dir="~/Documents/Spatial/mouse_brain/Sec1_Anterior/outs/"
+
+sec1_anterior <- SpatialExperiment::read10xVisium(samples = matrix_dir,
+                                                  type = "HDF5",
+                                                  data = "filtered",load = T)
+
+colData(sec1_anterior)$sample_id<-"Sec1_Anterior"
+
+matrix_dir="~/Documents/Spatial/mouse_brain/Sec1_Posterior/outs/"
+
+sec1_posterior <- SpatialExperiment::read10xVisium(samples = matrix_dir,
+                                                  type = "HDF5",
+                                                  data = "filtered",load = T)
+
+colData(sec1_posterior)$sample_id<-"Sec1_Posterior"
+
+matrix_dir="~/Documents/Spatial/mouse_brain/Sec2_Anterior/outs/"
+
+sec2_anterior <- SpatialExperiment::read10xVisium(samples = matrix_dir,
+                                                  type = "HDF5",
+                                                  data = "filtered",load = T)
+
+colData(sec2_anterior)$sample_id<-"Sec2_Anterior"
+
+matrix_dir="~/Documents/Spatial/mouse_brain/Sec2_Posterior/outs/"
+
+sec2_posterior <- SpatialExperiment::read10xVisium(samples = matrix_dir,
+                                                   type = "HDF5",
+                                                   data = "filtered",load = T)
+
+colData(sec2_posterior)$sample_id<-"Sec2_Posterior"
+
+rowData(sec1_anterior)$is.HVG = NULL 
+rowData(sec1_posterior)$is.HVG = NULL 
+rowData(sec2_anterior)$is.HVG = NULL 
+rowData(sec2_posterior)$is.HVG = NULL 
+
+for(i in 1:nrow(colData(sec1_anterior))){
+  colData(sec1_anterior)@rownames[i]<-paste0("Sec1_Ant_",colData(sec1_anterior)@rownames[i])
+}
+for(i in 1:nrow(colData(sec1_posterior))){
+  colData(sec1_posterior)@rownames[i]<-paste0("Sec1_Post_",colData(sec1_posterior)@rownames[i])
+}
+for(i in 1:nrow(colData(sec2_anterior))){
+  colData(sec2_anterior)@rownames[i]<-paste0("Sec2_Ant_",colData(sec2_anterior)@rownames[i])
+}
+for(i in 1:nrow(colData(sec2_posterior))){
+  colData(sec2_posterior)@rownames[i]<-paste0("Sec2_Post_",colData(sec2_posterior)@rownames[i])
+}
+
+
+
+
+```
