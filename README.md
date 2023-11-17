@@ -1,3 +1,4 @@
+[![DOI: 10.1093/bib/bbaa269](https://img.shields.io/badge/DOI-10.1101/2023.09.08.556895-brightgreen)](https://doi.org/10.1101/2023.09.08.556895)
 # MUSTANG
 ![GitHub Logo](/Miscel/Fig1_A4_cropped.png)
 ## Overview
