@@ -116,3 +116,5 @@ sce.combined
     ## imgData names(4): sample_id image_id data scaleFactor
 
    
+# Batch Correction
+Correcting possible batch effects when performing multi-sample analysis is necessary. Here, we perform batch correction and visualize the UMAP embedding of spots before and after batch correction:
