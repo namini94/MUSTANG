@@ -1,4 +1,3 @@
-[![DOI](https://zenodo.org/badge/326273034.svg)](https://zenodo.org/badge/latestdoi/326273034)
 # MUSTANG
 ![GitHub Logo](/Miscel/Fig1_A4_cropped.png)
 ## Overview
