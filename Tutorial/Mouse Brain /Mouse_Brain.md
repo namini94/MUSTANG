@@ -152,9 +152,51 @@ ggplot(data.frame(reducedDim(sce.combined, "UMAP.HARMONY"))) +
                      values=c("steelblue1", "peru", "green","mediumpurple"))+
   theme(axis.line = element_line(colour = 'black', size = 1.5))+
   coord_fixed()
-
-
 ```
 <img src="https://github.com/namini94/MUSTANG/blob/main/Miscel/Mouse_Brain_Markdown_Figs/MB_wBatchCorrection.png" width="50%" height="50%">
 
+# KNN Graph & Louvain Clustering
 
+``` r
+harmony<-data.frame(reducedDim(sce.combined, "HARMONY"))
+harmony_umap<-data.frame(reducedDim(sce.combined, "UMAP.HARMONY"))
+k <- 50
+tempcom <- MERINGUE::getClusters(harmony, k, weight=TRUE, method = igraph::cluster_louvain)
+
+dat <- data.frame("emb1" = harmony_umap$UMAP1,
+                  "emb2" = harmony_umap$UMAP2,
+                  "Cluster" = tempCom)
+
+plt <- ggplot2::ggplot(data = dat) +
+  ggplot2::geom_point(alpha=0.4,ggplot2::aes(x = emb1, y = emb2,
+                                             color = Cluster), size = 0.9) +
+  
+  ggplot2::scale_color_manual(values = rainbow(n = length(levels(tempCom)))) +
+  
+  ggplot2::labs(title = "",
+                x = "UMAP1",
+                y = "UMAP2") +
+  
+  ggplot2::theme_classic() +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(color = "black"),
+                 axis.text.y = ggplot2::element_text(color = "black"),
+                 axis.title.y = ggplot2::element_text(),
+                 axis.title.x = ggplot2::element_text(),
+                 axis.ticks.x = ggplot2::element_blank(),
+                 plot.title = ggplot2::element_text(size=15),
+                 legend.text = ggplot2::element_text( colour = "black"),
+                 legend.title = ggplot2::element_text( colour = "black", angle = 0, hjust = 0.5),
+                 panel.background = ggplot2::element_blank(),
+                 plot.background = ggplot2::element_blank(),
+                 panel.grid.major.y =  ggplot2::element_blank(),
+                 axis.line = ggplot2::element_line(size = 1.5, colour = "black")
+                 # legend.position="none"
+  ) +
+  
+  
+  ggplot2::coord_fixed()
+
+plt
+
+```
+<img src="https://github.com/namini94/MUSTANG/blob/main/Miscel/Mouse_Brain_Markdown_Figs/LouvainClusters.png" width="50%" height="50%">
