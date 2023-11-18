@@ -134,3 +134,4 @@ ggplot(data.frame(reducedDim(sce.combined, "UMAP"))) +
   coord_fixed()
 
 ```
+![]()
