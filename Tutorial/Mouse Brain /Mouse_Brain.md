@@ -135,3 +135,26 @@ ggplot(data.frame(reducedDim(sce.combined, "UMAP"))) +
 
 ```
 <img src="https://github.com/namini94/MUSTANG/blob/main/Miscel/Mouse_Brain_Markdown_Figs/MB_NoBatch.png" width="50%" height="50%">
+Now, we do batch correction and visualize the umap embedding again:
+
+``` r
+colData(sce.combined)$sample_id<-as.factor(colData(sce.combined)$sample_id)
+
+sce.combined = RunHarmony(sce.combined, c("sample_id"), verbose = T)
+sce.combined = runUMAP(sce.combined, dimred = "HARMONY", name = "UMAP.HARMONY")
+colnames(reducedDim(sce.combined, "UMAP.HARMONY")) = c("UMAP1", "UMAP2")
+
+ggplot(data.frame(reducedDim(sce.combined, "UMAP.HARMONY"))) +
+  geom_point(alpha=0.3,aes(x = UMAP1, y = UMAP2, color = factor(sce.combined$sample_id)),size=0.7) +
+  labs(color = "Sample") +
+  theme_classic()+
+  scale_color_manual(breaks = c("Sec1_Anterior", "Sec1_Posterior", "Sec2_Anterior","Sec2_Posterior"),
+                     values=c("steelblue1", "peru", "green","mediumpurple"))+
+  theme(axis.line = element_line(colour = 'black', size = 1.5))+
+  coord_fixed()
+
+
+```
+<img src="https://github.com/namini94/MUSTANG/blob/main/Miscel/Mouse_Brain_Markdown_Figs/MB_wBatchCorrection.png" width="50%" height="50%">
+
+
