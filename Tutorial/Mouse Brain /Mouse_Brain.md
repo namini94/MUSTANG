@@ -259,3 +259,18 @@ neighbors = utils.get_edges(pos=pos, layout=1)
 pandas.DataFrame(neighbors).to_csv("~/Spatial/res_mouseBrain_total/spatial_neighbors.csv",index=True)
 
 ```
+
+# Spots Similarity Graph
+Now that we have extracted both spots transcriptional and spatial edges we can construct the spots similarity graph edges in R by running below code:
+
+```r
+transcrip_neighbors<-read.csv(file = "~/Spatial/res_mouseBrain_total/transcrip_neighbors.csv")
+spatial_neighbors<-read.csv(file = "~/Spatial/res_mouseBrain_total/spatial_neighbors.csv",row.names = 1)
+
+colnames(transcrip_neighbors)<-colnames(spatial_neighbors)
+similarity_neighbors<-rbind(transcrip_neighbors,spatial_neighbors)
+
+write.csv(similarity_neighbors,file="~/Spatial/res_mouseBrain_total/similarity_neighbors.csv",quote = F,row.names = T)
+
+
+```
