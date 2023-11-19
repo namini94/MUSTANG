@@ -241,3 +241,5 @@ for(i in 1:(nrow(meta)-1)){
 final_transcrip_adjacency<-cbind(transcrip_adjacency$Node1,transcrip_adjacency$Node2)
 
 ```
+
+# Spots Spatial Graph
