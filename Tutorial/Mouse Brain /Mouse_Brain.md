@@ -227,15 +227,17 @@ sample_ID<-rbind(sample_ID_Sec2Ant,sample_ID_Sec1Ant,sample_ID_Sec2Post,sample_I
 meta<-cbind(tempcom,sample_ID)
 
 transcrip_edge_num <- 0 
-transcrip_adjacency <- matrix(0,3535825,2)
+transcrip_adjacency <- list("Node1","Node2")
 for(i in 1:(nrow(meta)-1)){
   for(j in (i+1):nrow(meta)){
     if((meta[i,1]==meta[j,1]) & (meta[i,2]!=meta[j,2])){
       transcrip_edge_num <- transcrip_edge_num + 1 
-      transcrip_adjacency[transcrip_edge_num,1]<-i-1
-      transcrip_adjacency[transcrip_edge_num,2]<-j-1
+      transcrip_adjacency$Node1[transcrip_edge_num]<-i-1
+      transcrip_adjacency$Node2[transcrip_edge_num]<-j-1
     }
   }
 }
+
+final_transcrip_adjacency<-cbind(transcrip_adjacency$Node1,transcrip_adjacency$Node2)
 
 ```
