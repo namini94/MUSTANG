@@ -245,7 +245,7 @@ final_transcrip_adjacency<-cbind(transcrip_adjacency$Node1,transcrip_adjacency$N
 # Spots Spatial Graph
 After extracting the 2D spatial positions of spots for each section and adding the offsets as explained in the MUSTANG manuscript one can use the get_edges function from BayesTME package to extract the spots spatial graph of the multi-samples ST data using below codes in Python:
 
-```{python}
+```python
 from bayestme import data
 import pandas
 import numpy
