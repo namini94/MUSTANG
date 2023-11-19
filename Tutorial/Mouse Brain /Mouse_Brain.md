@@ -200,3 +200,42 @@ plt
 
 ```
 <img src="https://github.com/namini94/MUSTANG/blob/main/Miscel/Mouse_Brain_Markdown_Figs/Louvain_Clusters.png" width="50%" height="50%">
+
+# Spots Transcriptional Graph
+Now that we have identified the spots trancriptional clusters, we can construct and store the edges of spots transcriptional graph.
+
+``` r
+sample_ID_Sec2Ant<-matrix(0,nrow(colData(sec2_anterior)),1)
+for(i in 1:nrow(colData(sec2_anterior))){
+  sample_ID_Sec2Ant[i,1]<-c("Sec2_Anterior")
+}
+sample_ID_Sec1Ant<-matrix(0,nrow(colData(sec1_anterior)),1)
+for(i in 1:nrow(colData(sec1_anterior))){
+  sample_ID_Sec1Ant[i,1]<-c("Sec1_Anterior")
+}
+sample_ID_Sec2Post<-matrix(0,nrow(colData(sec2_posterior)),1)
+for(i in 1:nrow(colData(sec2_posterior))){
+  sample_ID_Sec2Post[i,1]<-c("Sec2_Posterior")
+}
+sample_ID_Sec1Post<-matrix(0,nrow(colData(sec1_posterior)),1)
+for(i in 1:nrow(colData(sec1_posterior))){
+  sample_ID_Sec1Post[i,1]<-c("Sec1_Posterior")
+}
+
+sample_ID<-rbind(sample_ID_Sec2Ant,sample_ID_Sec1Ant,sample_ID_Sec2Post,sample_ID_Sec1Post)
+
+meta<-cbind(tempcom,sample_ID)
+
+transcrip_edge_num <- 0 
+transcrip_adjacency <- matrix(0,3535825,2)
+for(i in 1:(nrow(meta)-1)){
+  for(j in (i+1):nrow(meta)){
+    if((meta[i,1]==meta[j,1]) & (meta[i,2]!=meta[j,2])){
+      transcrip_edge_num <- transcrip_edge_num + 1 
+      transcrip_adjacency[transcrip_edge_num,1]<-i-1
+      transcrip_adjacency[transcrip_edge_num,2]<-j-1
+    }
+  }
+}
+
+```
