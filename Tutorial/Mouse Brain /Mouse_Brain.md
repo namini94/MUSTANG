@@ -372,3 +372,4 @@ deconvolution.plot_cell_num(
 
 
 ```
+<img src="https://github.com/namini94/MUSTANG/blob/main/Miscel/Mouse_Brain_Markdown_Figs/ScatterPie_prob.png" width="50%" height="50%">
