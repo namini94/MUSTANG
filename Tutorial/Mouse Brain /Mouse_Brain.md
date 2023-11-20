@@ -274,3 +274,101 @@ write.csv(similarity_neighbors,file="~/Spatial/res_mouseBrain_total/similarity_n
 
 
 ```
+# Bayesian Deconvolution Analysis
+Now that we have our all three necessary inputs (i.e. Concatenated spots*genes gene expression matrix, concatenated spots positions with offsets and spots similarity graph), we move to the last step of analyzing our multi-sample ST data with MUSTANG that is performing Bayesian deconvolution analysis. We can do this in Python by running below line of codes:
+
+```python
+import pandas
+import numpy
+
+temp_counts = pandas.read_csv('~/Spatial/Data/MouseBrain/Total/tot_ST.csv',header=0,index_col=0,sep=",")
+counts = temp_counts.to_numpy()
+
+temp_pos = pandas.read_csv('~/Spatial/Data/MouseBrain/Total/tot_pos.csv',header=0,index_col=0,sep=",")
+pos = temp_pos.to_numpy()
+
+temp_genes = pandas.read_csv('~/Spatial/Data/MouseBrain/Total/Gene_names.csv',header=0,sep=",")
+genes = temp_genes.to_numpy()
+genes = genes.reshape(-1)
+
+temp_mask = pandas.read_csv('~/Spatial/Data/MouseBrain/Total/tissue_mask.csv',header=0,sep=",")
+mask = temp_mask.to_numpy()
+mask = mask.reshape(-1)
+
+temp_barcodes = pandas.read_csv('~/Spatial/Data/MouseBrain/Total/Barcodes.csv',header=0,sep=",")
+barcodes = temp_barcodes.to_numpy()
+barcodes = barcodes.reshape(-1)
+
+neighbors_tot = pandas.read_csv('~/Spatial/Data/MouseBrain/Total/similarity_neighbors.csv',header=0,index_col=0)
+neighbors_tot.reset_index(drop=True, inplace=True)
+neigh = neighbors_tot.to_numpy()
+
+
+stdata= data.SpatialExpressionDataset.from_arrays(raw_counts=counts,
+         positions=pos,
+         tissue_mask=mask,
+         gene_names=genes,
+         layout=data.Layout.HEX,
+         barcodes=barcodes)
+
+#len(stdata.gene_names)
+
+stdata_stddev_filtered = gene_filtering.select_top_genes_by_standard_deviation(
+    stdata, n_gene=1000)
+
+#len(stdata_stddev_filtered.gene_names)
+
+spot_threshold_filtered = gene_filtering.filter_genes_by_spot_threshold(
+    stdata_stddev_filtered, spot_threshold=0.95)
+
+stdata_filtered = gene_filtering.filter_ribosome_genes(spot_threshold_filtered)
+
+print('{}/{} genes selected'.format(len(stdata_filtered.gene_names), len(stdata.gene_names)))
+
+from pathlib import Path
+
+best_lambda = 1000
+best_n_components = 11
+
+deconvolution_result = deconvolution.deconvolve(
+        reads=stdata_filtered.reads,
+        edges=stdata_filtered.edges,
+        n_gene=1000,
+        n_components=best_n_components,
+        lam2=best_lambda,
+        n_samples=100,
+        n_burnin=1000,   # 2000 in publication
+        n_thin=5,        # 5 in  publication
+        bkg=False,
+        lda=False,
+        similarity_graph=neigh)
+
+
+Path("./deconvolution_plots_transcrip").mkdir(exist_ok=True)
+Path("./deconvolution_res_transcrip").mkdir(exist_ok=True)
+
+deconvolution.add_deconvolution_results_to_dataset(stdata=stdata_filtered, result=deconvolution_result)
+
+deconvolution_result.save('./deconvolution_res_transcrip/deconvolve_result.h5')
+
+deconvolution.plot_cell_num_scatterpie(
+        stdata= stdata_filtered,
+        output_path= './deconvolution_plots_transcrip/Scatter_piechart.png')
+
+deconvolution.plot_cell_prob(
+        stdata=stdata_filtered,
+#        result=deconvolution_result,
+        output_dir='./deconvolution_plots_transcrip',
+        output_format= 'png',
+)
+
+deconvolution.plot_cell_num(
+        stdata=stdata_filtered,
+#        result=deconvolution_result,
+        output_dir='./deconvolution_plots_transcrip',
+        output_format= 'png',
+)
+
+
+
+```
