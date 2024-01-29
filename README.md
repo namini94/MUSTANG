@@ -23,5 +23,5 @@ In order to analyze your multi-sample spatial transcriptional (ST) data with MUS
 
 ## Tutorials
 - [Analysis of Mouse Brain ST data with `MUSTANG`](https://github.com/namini94/MUSTANG/blob/main/Tutorial/Mouse%20Brain%20/Mouse_Brain.md)
-- [Semi-Synthetic Multi-sample Data Generation](https://github.com/namini94/MUSTANG/blob/main/Tutorial/Mouse%20Brain%20/Mouse_Brain.md)
+- [Semi-Synthetic Multi-sample Data Generation](https://github.com/namini94/MUSTANG/blob/main/Tutorial/Semi-synthetic%20Data%20Simulation/DataSimulation.md)
 
