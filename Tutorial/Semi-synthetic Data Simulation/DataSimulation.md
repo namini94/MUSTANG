@@ -14,6 +14,14 @@ The STARmap mouse visual cortex is publicly available but for sake of convenienc
 Here, we describe how one can generate the simulated low resolution semi-synthetic ST data from the STARmap mouse visual cortex data. As an example here we generate one sample with the window size of 600 pixels:
 
 ```python
+"""
+Semi-synthetic Data generation for MUSTANG Benchmarking.
+
+Acknowledgements:
+Based on the descriptions and codes from the 
+https://github.com/QuKunLab/SpatialBenchmarking
+"""
+
 
 import numpy as np
 import pandas as pd
