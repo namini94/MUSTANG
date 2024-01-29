@@ -139,4 +139,4 @@ plt.show()
 
 ```
 
-
+<img src="https://github.com/namini94/MUSTANG/blob/main/Miscel/Mouse_Brain_Markdown_Figs/MB_NoBatch.png" width="50%" height="50%">
