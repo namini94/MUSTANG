@@ -6,7 +6,7 @@
 
 ## Citation
 
-If you use this code, please cite the [preprint](https://www.biorxiv.org/content/10.1101/2023.09.08.556895v1):
+If you use this code, please cite our Patterns journal [paper](https://www.cell.com/patterns/fulltext/S2666-3899(24)00101-6):
 
 ```
 MUSTANG: MUlti-sample Spatial Transcriptomics data ANalysis with cross-sample transcriptional similarity Guidance
