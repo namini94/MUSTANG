@@ -9,9 +9,7 @@
 If you use this code, please cite our Patterns journal [paper](https://www.cell.com/patterns/fulltext/S2666-3899(24)00101-6):
 
 ```
-MUSTANG: MUlti-sample Spatial Transcriptomics data ANalysis with cross-sample transcriptional similarity Guidance
-Seyednami Niyakan, Jianting Sheng, Yuliang Cao, Xiang Zhang, Zhan Xu, Ling Wu, Stephen T.C. Wong, Xiaoning Qian
-bioRxiv 2023.09.08.556895; doi: https://doi.org/10.1101/2023.09.08.556895
+Niyakan, S., Sheng, J., Cao, Y., Zhang, X., Xu, Z., Wu, L., Wong, S. T. C., & Qian, X. (2024). MUSTANG: Multi-sample spatial transcriptomics data analysis with cross-sample transcriptional similarity guidance. Patterns (New York, N.Y.), 5(5), 100986. https://doi.org/10.1016/j.patter.2024.100986
 ```
 ## Quick Start
 In order to analyze your multi-sample spatial transcriptional (ST) data with MUSTANG, 4 main steps should be performed:
